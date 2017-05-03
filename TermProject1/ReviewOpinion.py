@@ -1,4 +1,5 @@
 from Parser import Parser
+import csv
 import jieba
 
 class ReviewOpinion(object):
@@ -41,10 +42,10 @@ class ReviewOpinion(object):
                 for term in terms:
                     if term in sentence:
                         sentence_segment = self.segment(sentence)
-                        for character in sentence_segment:
-                            if character in neg_words:
+                        for word in sentence_segment:
+                            if word in neg_words:
                                 score -= 1
-                            elif character in pos_words:
+                            elif word in pos_words:
                                 score += 1
             opinion = 0
             if score > 0:

@@ -1,4 +1,3 @@
-import pandas as pd
 import csv
 
 
@@ -49,6 +48,30 @@ class Parser():
                     index = 0
         return aspect_review_list
 
+    def polarity_seg(self):
+        polarity_seg = []
+        with open(self.data_folder + 'polarity_review_seg.csv') as file:
+            for index, row  in enumerate(csv.reader(file)):
+                if index == 0:
+                    continue
+                row[1] = row[1].split(' ')
+                tmp = []
+                for word in row[1]:
+                    if word not in self.filter_punc:
+                        tmp.append(word)
+                row[1] = tmp
+                polarity_seg.append(row)
+        return polarity_seg
+
+    def polarity_pos(self):
+        polarity_pos = []
+        with open(self.data_folder + 'polarity_review_posseg.csv') as file:
+            for index, row in enumerate(csv.reader(file)):
+                if index == 0:
+                    continue
+                polarity_pos.append(row)
+        return polarity_pos
+
     def polarity_review(self):
         polarity_review = []
         with open(self.data_folder + 'polarity_review.txt') as file:
@@ -93,5 +116,4 @@ class Parser():
 
 if __name__ == '__main__':
     parser = Parser()
-    parser.parse_review('aspect_review_half.txt', 4)
-    print (parser.polarity_review())
+    print (parser.polarity_seg())
