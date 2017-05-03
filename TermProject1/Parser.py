@@ -6,12 +6,17 @@ class Parser():
     """docstring for Parser"""
     def __init__(self):
         self.data_folder = "./data/"
-        self.filter_punc = ",，.．。!！?？-()（）「」『 』:：、;～ "
+        self.filter_punc = ",，.．。!！?？-()（）「」『 』:：、;～~ "
 
     '''
     if parse aspect_term.txt the size = 4
     else parse test.review.txt the size = 2
     '''
+    def _trim_punc(self, line, replace_str = ','):
+        for punc in self.filter_punc:
+            line = line.replace(punc, replace_str)
+        return line
+
     def parse_review(self, file_name, size):
         index = 0
         aspect_review_list = []
@@ -19,8 +24,7 @@ class Parser():
             aspect = []
             for line in file:
                 line = line.strip()
-                for punc in self.filter_punc:
-                    line = line.replace(punc, ',')
+                line = self._trim_punc(line)
                 aspect.append(line)
                 index += 1
                 if index == size:
@@ -40,8 +44,7 @@ class Parser():
                     review_id = line
                     index +=1
                 elif index == 1:
-                    for punc in self.filter_punc:
-                        line = line.replace(punc, ',')
+                    line = self._trim_punc(line)
                     aspect_review_list[review_id] = line
                     index = 0
         return aspect_review_list
@@ -52,6 +55,7 @@ class Parser():
             for line in file:
                 line = line.strip()
                 line = line.split('\t')
+                # line[1] = self._trim_punc(line[1], '')
                 polarity_review.append(line)
         return polarity_review
 
