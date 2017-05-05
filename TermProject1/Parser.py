@@ -7,36 +7,40 @@ class Parser():
         self.data_folder = "./data/"
         self.filter_punc = ",，.．。!！?？-()（）「」『 』:：、;～~ "
 
-    '''
-    if parse aspect_term.txt the size = 4
-    else parse test.review.txt the size = 2
-    '''
+    
     def _trim_punc(self, line, replace_str = ','):
         for punc in self.filter_punc:
             line = line.replace(punc, replace_str)
         return line
 
+    '''
+    if parse aspect_review.txt the size = 4
+    else parse test.review.txt the size = 2
+    '''
     def parse_review(self, file_name, size):
         index = 0
         aspect_review_list = []
         with open(self.data_folder + file_name) as file:
-            aspect = []
+            content = []
             for line in file:
                 line = line.strip()
                 line = self._trim_punc(line)
-                aspect.append(line)
+                if index > 1:
+                    line = line.split('\t')
+                content.append(line)
                 index += 1
                 if index == size:
                     index = 0
-                    aspect_review_list.append(aspect)
-                    aspect = []
+                    aspect_review_list.append(content)
+                    content = []
         return aspect_review_list
 
-    def test_review(self):
+    def test_review(self, file_name):
         index = 0
         review_id = 0
         aspect_review_list = {}
-        with open(self.data_folder + 'test_review.txt') as file:
+        # with open(self.data_folder + 'test_review.txt') as file:
+        with open(self.data_folder + file_name) as file:
             for line in file:
                 line = line.strip()
                 if index == 0:
@@ -82,8 +86,9 @@ class Parser():
                 polarity_review.append(line)
         return polarity_review
 
-    def read_test(self):
-        csv_reader = list(csv.reader(open(self.data_folder + 'test.csv')))
+    def read_test(self, file_name):
+        # csv_reader = list(csv.reader(open(self.data_folder + 'test.csv')))
+        csv_reader = list(csv.reader(open(self.data_folder + file_name)))
         return csv_reader[1:]
 
     def read_aspect_term(self):
