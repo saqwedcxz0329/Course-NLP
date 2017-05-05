@@ -27,13 +27,13 @@ def evaluate():
             continue
         submit_list.append(line[1])
     
-    error = 0
+    correct = 0
     for index, answer_label in enumerate(answer_list):
         submit_label = submit_list[index]
-        if submit_label != answer_label:
-            error += 1
+        if submit_label == answer_label:
+            correct += 1
 
-    print (error / len(answer_list))
+    print ("Accuracy rate: %f" %(correct / len(answer_list)))
 
 
 def validation():
