@@ -1,4 +1,5 @@
 from Parser import Parser
+import random
 
 data_folder = "./data/"
 validation_review_name = data_folder + "/validation_review.txt"
@@ -7,6 +8,7 @@ answer_name = data_folder + '/answer.csv'
 submit_name = './submit.csv'
 
 parser = Parser()
+whole_aspect = ['服務', '環境', '價格', '交通', '餐廳']
 
 def evaluate():
     answer_list = []
@@ -49,16 +51,27 @@ def validation():
         content = line[1]
         pos_aspect = line[2]
         neg_aspect = line[3]
+        content_aspect = []
         for aspect in pos_aspect:
             if aspect != '':
                 validation_file.write('%s,%s,%s\n' %(validation_id, review_id, aspect))
                 answer_file.write('%s,%s\n' %(validation_id, '1'))
                 validation_id += 1
+                content_aspect.append(aspect)
         for aspect in neg_aspect:
             if aspect != '':
                 validation_file.write('%s,%s,%s\n' %(validation_id, review_id, aspect))
                 answer_file.write('%s,%s\n' %(validation_id, '-1'))
                 validation_id += 1
+                content_aspect.append(aspect)
+        if len(content_aspect) < 3:   
+            for aspect in whole_aspect:
+                if aspect not in content_aspect:
+                    if random.random() > 0.5:
+                        validation_file.write('%s,%s,%s\n' %(validation_id, review_id, aspect))
+                        answer_file.write('%s,%s\n' %(validation_id, '0'))
+                        validation_id += 1
+
         validation_review_file.write(review_id + '\n')
         validation_review_file.write(content + '\n')
     validation_review_file.close()
