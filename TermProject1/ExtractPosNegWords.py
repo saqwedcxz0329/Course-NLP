@@ -15,7 +15,7 @@ pos_words = []
 # print (pos_words)
 
 aspect_term = {}
-aspect = "價格"
+aspect = "交通"
 for index, line in enumerate(parser.polarity_seg()):
     print (index)
     opinion = line[0]

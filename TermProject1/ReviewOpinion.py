@@ -47,6 +47,7 @@ class ReviewOpinion(object):
                                 score -= 1
                             elif word in pos_words:
                                 score += 1
+
             opinion = 0
             if score > 0:
                 opinion = 1
