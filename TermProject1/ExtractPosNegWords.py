@@ -15,7 +15,7 @@ pos_words = []
 # print (pos_words)
 
 aspect_term = {}
-aspect = "交通"
+aspect = "價格"
 for index, line in enumerate(parser.polarity_seg()):
     print (index)
     opinion = line[0]
@@ -24,7 +24,8 @@ for index, line in enumerate(parser.polarity_seg()):
 
     finder = TrigramCollocationFinder.from_words(content)
     finder.apply_word_filter(lambda w: w.lower() in filter_list)
-
+    # if index >= 10000:
+        # break
     for a, b, c in finder.nbest(trigram_measures.pmi, 10):
         if a == aspect:
             if b in aspect_term.keys():
@@ -58,8 +59,20 @@ for index, line in enumerate(parser.polarity_seg()):
             # print ("%s, %s, %s" %(a, b, c))
 
 sorted_x = sorted(aspect_term.items(), key=operator.itemgetter(1))
-print (sorted_x)
-
+# print (sorted_x)
+candidate_aspect = []
+candidate_adj = []
+for content in sorted_x:
+    words = pseg.cut(content[0])
+    for word, flag in words:
+        if flag == 'n':
+            candidate_aspect.append(word)
+        if flag == 'a':
+            candidate_adj.append(word)
+        # print('%s %s' % (word, flag))
+print (candidate_aspect)
+print ("=====================")
+print (candidate_adj)
 
 # aspect_review_list = parser.aspect_review()
 # for line in aspect_review_list:
