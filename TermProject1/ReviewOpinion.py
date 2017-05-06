@@ -26,10 +26,10 @@ class ReviewOpinion(object):
     def main(self):
         file = open('submit.csv', 'w')
         file.write('Id,Label\n')
-        # test_review = self.parser.test_review('test_review.txt')
-        # test_csv = self.parser.read_test('test.csv')
-        test_review = self.parser.test_review('validation_review.txt')
-        test_csv = self.parser.read_test('validation.csv')
+        test_review = self.parser.test_review('test_review.txt')
+        test_csv = self.parser.read_test('test.csv')
+        # test_review = self.parser.test_review('validation_review.txt')
+        # test_csv = self.parser.read_test('validation.csv')
         neg_words = self.parser.negative()
         pos_words = self.parser.positive()
         aspect_term = self.parser.read_aspect_term()
@@ -55,6 +55,7 @@ class ReviewOpinion(object):
                 opinion = 1
             elif score < 0:
                 opinion = -1
+            # file.write('%s,%d\n' %(line[0], 0))
             file.write('%s,%d\n' %(line[0], opinion))
 
 if __name__ == '__main__':
