@@ -30,8 +30,8 @@ class ReviewOpinion(object):
         test_csv = self.parser.read_test('test.csv')
         # test_review = self.parser.test_review('validation_review.txt')
         # test_csv = self.parser.read_test('validation.csv')
-        neg_words = self.parser.negative()
-        pos_words = self.parser.positive()
+        neg_words = self.parser.negative('neg.txt')
+        pos_words = self.parser.positive('pos.txt')
         aspect_term = self.parser.read_aspect_term()
         for line in test_csv:
             review_id = line[1]

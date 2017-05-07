@@ -102,16 +102,16 @@ class Parser():
                 aspect_term[aspect] = terms
         return aspect_term
 
-    def negative(self):
-        with open(self.data_folder + 'NTUSD_neg.txt') as file:
+    def negative(self, file_name):
+        with open(self.data_folder + file_name) as file:
             negative_word = []
             for line in file:
                 line = line.strip('\n')
                 negative_word.append(line)
         return negative_word
 
-    def positive(self):
-        with open(self.data_folder + 'NTUSD_pos.txt') as file:
+    def positive(self, file_name):
+        with open(self.data_folder + file_name) as file:
             negative_word = []
             for line in file:
                 line = line.strip('\n')
